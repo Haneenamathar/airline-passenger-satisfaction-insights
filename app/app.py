@@ -12,7 +12,9 @@ HYPOTHESIS_PATH = Path(
 SERVICE_HYPOTHESIS_PATH = Path(
     "data/dashboard_data/service_hypothesis_results_v1.csv"
 )
-
+SERVICE_SUMMARY_PATH = Path(
+    "data/dashboard_data/service_rating_summary_v1.csv"
+)
 
 st.set_page_config(
     page_title="Airline Passenger Satisfaction Insights",
@@ -29,15 +31,24 @@ def load_data():
     service_hypothesis_data = pd.read_csv(
         SERVICE_HYPOTHESIS_PATH
     )
+    service_summary_data = pd.read_csv(
+    SERVICE_SUMMARY_PATH
+)
 
     return (
-        passenger_data,
-        hypothesis_data,
-        service_hypothesis_data,
-    )
+    passenger_data,
+    hypothesis_data,
+    service_hypothesis_data,
+    service_summary_data,
+)    
 
 
-df, hypothesis_results, service_hypothesis_results = load_data()
+(
+    df,
+    hypothesis_results,
+    service_hypothesis_results,
+    service_summary,
+) = load_data()
 
 
 st.sidebar.title("Dashboard Navigation")
@@ -423,7 +434,125 @@ elif page == "Passenger Insights":
         "groups of different sizes can be compared fairly."
     )
 
+elif page == "Service Experience":
+    st.title("Service Experience")
 
+    st.write(
+        "Explore which airline service areas show the strongest "
+        "relationships with overall passenger satisfaction."
+    )
+
+    # ---------------------------------------------------------
+    # Service Rating Differences
+    # ---------------------------------------------------------
+    st.subheader("Service Rating Differences")
+
+    service_difference_data = service_summary.sort_values(
+        "Rating Difference",
+        ascending=True,
+    )
+
+    difference_chart = px.bar(
+        service_difference_data,
+        x="Rating Difference",
+        y="Service",
+        orientation="h",
+        title=(
+            "Difference in Average Service Ratings: "
+            "Satisfied vs Dissatisfied Passengers"
+        ),
+    )
+
+    difference_chart.update_layout(
+        xaxis_title="Average Rating Difference",
+        yaxis_title="Service Area",
+    )
+
+    st.plotly_chart(
+        difference_chart,
+        use_container_width=True,
+    )
+
+    st.caption(
+        "Positive values indicate that satisfied passengers gave "
+        "higher average ratings to that service area."
+    )
+
+    # ---------------------------------------------------------
+    # Strongest Service Associations
+    # ---------------------------------------------------------
+    st.subheader("Strongest Associations with Satisfaction")
+
+    correlation_data = service_hypothesis_results.sort_values(
+        "Spearman Correlation",
+        ascending=True,
+    )
+
+    correlation_chart = px.bar(
+        correlation_data,
+        x="Spearman Correlation",
+        y="Service",
+        orientation="h",
+        title="Service Rating Association with Passenger Satisfaction",
+    )
+
+    correlation_chart.update_layout(
+        xaxis_title="Spearman Correlation",
+        yaxis_title="Service Area",
+    )
+
+    st.plotly_chart(
+        correlation_chart,
+        use_container_width=True,
+    )
+
+    # ---------------------------------------------------------
+    # Key Findings
+    # ---------------------------------------------------------
+    st.subheader("Key Findings")
+
+    col1, col2, col3 = st.columns(3)
+
+    col1.metric(
+        "Strongest Association",
+        "Online boarding",
+        "ρ = 0.551",
+    )
+
+    col2.metric(
+        "Second Strongest",
+        "Inflight entertainment",
+        "ρ = 0.400",
+    )
+
+    col3.metric(
+        "Third Strongest",
+        "Seat comfort",
+        "ρ = 0.362",
+    )
+
+    st.success(
+        "Online boarding shows the strongest positive association "
+        "with passenger satisfaction among the service ratings "
+        "analysed. Inflight entertainment and seat comfort also "
+        "show notable positive relationships."
+    )
+
+    st.info(
+        "Gate location shows almost no association with satisfaction "
+        "in this dataset. Departure/arrival time convenience shows "
+        "only a very small negative association."
+    )
+
+    st.warning(
+        "These results describe statistical associations, not causal "
+        "effects. A stronger correlation does not prove that improving "
+        "a service will directly cause an equivalent increase in "
+        "passenger satisfaction."
+    )
+
+
+    
 elif page == "Statistical & Predictive Analysis":
     st.title("Statistical & Predictive Analysis")
 
