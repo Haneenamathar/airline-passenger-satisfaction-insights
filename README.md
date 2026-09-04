@@ -1,686 +1,990 @@
-# Project Title
+# Airline Passenger Satisfaction Insights
 
-*Airline Passenger Satisfaction Analysis 2026*
-
----
 ## Project Overview
 
-This project analyses airline passenger satisfaction data to identify the passenger, travel and service factors associated with a positive or negative passenger experience.
+Airline Passenger Satisfaction Insights is an interactive data analytics application developed to explore the factors associated with airline passenger satisfaction.
 
-The dataset contains information about passenger characteristics, type of travel, travel class, flight distance, flight delays and ratings for different airline services.
+This project builds on the original Airline Passenger Satisfaction analysis by transforming exploratory analysis, statistical testing and machine-learning findings into an interactive Streamlit dashboard designed for both non-technical and technical audiences.
 
-The project applies data cleaning, exploratory data analysis, statistical analysis and supervised machine learning to investigate passenger satisfaction. A Random Forest classification model was developed to predict whether a passenger is satisfied or neutral/dissatisfied.
+The dataset contains passenger characteristics, travel information, airline service ratings, flight delays and an overall passenger satisfaction classification.
 
-The final Random Forest model achieved **96.42% test accuracy**, outperforming both the baseline classifier and Logistic Regression model.
+The application enables stakeholders to explore satisfaction patterns, investigate important passenger segments, compare airline service experiences and review the statistical evidence supporting the main findings.
 
-An interactive Streamlit dashboard was also developed to communicate the main analytical findings, machine-learning performance and business recommendations to stakeholders.
-
----
-
-## Project Links
-
-* **GitHub Repository:** [Airline Passenger Satisfaction](https://github.com/Haneenamathar/airline-passenger-satisfaction)
-* **Live Dashboard:** https://airline-satisfaction-2026-815befa26a7c.herokuapp.com/
+The project also considers responsible data practice, privacy, GDPR principles, accessibility, data governance and the limitations of using analytical and predictive results for business decision-making.
 
 ---
 
-##  Business Problem
+# Project Purpose
 
-This project investigates the available passenger data to identify patterns associated with satisfaction and provides insights that could help an airline understand which areas of the passenger experience may need more attention.
+The purpose of this project is to transform the findings from the Airline Passenger Satisfaction analysis into an interactive data application that enables users to explore the factors influencing passenger satisfaction.
 
----
+The application presents clear business-focused insights for non-technical users while also providing more detailed analytical information for technical users.
 
-##  Project Aim
-
-
-The main aim of this project is to analyse airline passenger data to identify factors associated with passenger satisfaction and develop a machine-learning model capable of predicting whether a passenger is satisfied or neutral/dissatisfied.
-
-The project also aims to translate the analytical findings into practical business insights through an interactive dashboard that can support customer-experience and service-improvement decisions.
+The goal is to support data-driven decision-making by identifying service areas, passenger characteristics and travel experiences that are strongly associated with customer satisfaction.
 
 ---
 
-##  Target Audience / Stakeholders
+# Business Problem
 
-The main stakeholders for this project could include:
+Passenger satisfaction is influenced by many aspects of the travel experience, including passenger characteristics, type of travel, travel class, airline services and operational factors.
 
-* Airline management
-* Customer experience teams
-* Operations teams
-* Marketing teams
+For airline stakeholders, analysing these factors through static tables or notebooks alone can make it difficult to quickly identify important patterns.
 
-The results can help these stakeholders better understand passenger behaviour and identify areas where improvements to services may have the greatest impact.
+This project therefore develops an interactive dashboard that allows users to explore the available passenger data and understand which factors show the strongest relationships with satisfaction.
 
----
-
-#  Business Requirements
-
-## BR1 — Understand Passenger Satisfaction
-
-The first business requirement was to understand the overall level of passenger satisfaction in the dataset.
-
-The analysis examined:
-
-* The number of satisfied passengers.
-* The number of neutral or dissatisfied passengers.
-* The percentage of passengers belonging to each satisfaction category.
-
-### Outcome
-
-The analysis found that approximately **43.3% of passengers were satisfied**, while approximately **56.7% were neutral or dissatisfied**.
-
-This established the overall satisfaction profile of the dataset and showed that fewer than half of the passengers were classified as satisfied.
-
+The application is intended as a decision-support and analytical communication tool rather than a system for making automated operational decisions.
 
 ---
 
+# Target Audiences
 
+The application has been designed for two main audiences.
 
-## BR2 — Investigate Passenger and Travel Characteristics
+## Non-Technical Audience
 
-The second business requirement was to investigate whether passenger and travel characteristics were associated with satisfaction.
+The primary non-technical users could include:
 
-The analysis considered:
+- Airline managers
+- Customer-experience teams
+- Service-quality teams
+- Operational decision-makers
 
-* Gender
-* Age
-* Customer Type
-* Type of Travel
-* Travel Class
-* Flight Distance
+These users require:
 
-### Outcome
+- Clear KPI metrics
+- Interactive filters
+- Accessible visualisations
+- Plain-language explanations
+- Practical business insights
+- Clearly communicated recommendations
 
-Gender showed relatively little difference in satisfaction, suggesting that gender alone is unlikely to be a major factor associated with passenger satisfaction.
+The business-facing sections of the dashboard focus on answering:
 
-Satisfied passengers tended to be older than neutral or dissatisfied passengers, although the age distributions overlapped considerably.
+> What is happening and what should we pay attention to?
 
-Loyal customers showed a higher proportion of satisfied passengers than disloyal customers.
+## Technical Audience
 
-Clear differences were also identified according to travel characteristics. Business travellers showed substantially higher satisfaction than personal travellers.
+Technical users could include:
 
-Travel class showed a particularly strong pattern. Approximately **69.43% of Business Class passengers were satisfied**, compared with **24.58% of Eco Plus passengers** and **18.61% of Eco passengers**.
+- Data analysts
+- Data scientists
+- Technically experienced stakeholders
 
-Flight distance showed some differences between satisfaction groups, although the distributions overlapped considerably.
+These users require access to:
 
-Overall, the results indicate that **customer type, type of travel and travel class** are particularly relevant characteristics when investigating passenger satisfaction.
+- Statistical methodology
+- Hypothesis-testing results
+- Effect sizes
+- Variable relationships
+- Machine-learning performance
+- Assumptions and limitations
+- Information about data preparation and governance
 
----
-## BR3 — Investigate Airline Service Ratings
+The technical sections of the dashboard focus on answering:
 
-The third business requirement was to investigate which airline services showed the strongest relationship with passenger satisfaction.
-
-The analysis considered service areas including:
-
-* Inflight Wi-Fi
-* Online booking
-* Online boarding
-* Seat comfort
-* Food and drink
-* Inflight entertainment
-* Leg room
-* Baggage handling
-* Check-in service
-* Inflight service
-* Cleanliness
-* On-board service
-
-### Outcome
-
-Satisfied passengers generally gave higher service ratings than neutral or dissatisfied passengers.
-
-The largest difference in average rating was identified for **Online boarding**, where satisfied passengers gave an average rating of **4.03**, compared with **2.66** among neutral or dissatisfied passengers, a difference of **1.37 points**.
-
-Other notable differences included:
-
-* **Inflight entertainment:** 1.07 points
-* **Seat comfort:** 0.93 points
-* **On-board service:** 0.84 points
-* **Leg room service:** 0.83 points
-
-The machine-learning feature importance analysis supported these findings. **Online boarding** was the most important feature in the final Random Forest model, followed closely by **Inflight Wi-Fi service**.
-
-Overall, the results suggest that the digital passenger journey and onboard service experience are important areas for understanding passenger satisfaction.
+> What evidence supports these conclusions and how was it analysed?
 
 ---
 
-## BR4 — Investigate Flight Delays
+# Business Requirements
 
-The fourth business requirement was to investigate the relationship between flight delays and passenger satisfaction.
+## BR1 — Understand Passenger Satisfaction Patterns
 
-The analysis considered:
+Provide an interactive overview of passenger satisfaction and allow users to investigate differences across passenger characteristics, customer type, travel type and class.
 
-* Departure delays
-* Arrival delays
-* Delay distributions
-* Delay patterns across satisfaction groups
+## BR2 — Identify Key Drivers of Passenger Satisfaction
 
-### Outcome
+Allow users to investigate which airline service ratings and travel-related factors have the strongest relationships with overall passenger satisfaction.
 
-Both departure and arrival delay variables showed strongly right-skewed distributions.
+## BR3 — Support Data-Driven Service Improvement
 
-The mean departure delay was approximately **14.75 minutes**, while the mean arrival delay was approximately **15.18 minutes**. However, the median for both variables was **0 minutes**.
+Enable non-technical airline stakeholders to identify weaker service areas, important passenger segments and potential opportunities for improving passenger experience.
 
-This difference between the mean and median indicates that most passengers experienced little or no delay, while a relatively small number of flights experienced very large delays.
+## BR4 — Validate Insights with Analytical Evidence
 
-Passengers with longer delays generally showed lower satisfaction, although delay was only one of several factors associated with the overall passenger experience.
-
-The results suggest that reducing severe delays may contribute to improved passenger experience, but service quality and travel characteristics also play important roles in satisfaction.
-
+Provide technical users with statistical evidence, hypothesis-testing results and relevant model findings so dashboard conclusions can be traced to the underlying analysis.
 
 ---
 
-## BR5 — Predict Passenger Satisfaction
+# Research Questions
 
-The final analytical business requirement was to develop a machine-learning model capable of predicting passenger satisfaction using passenger characteristics, travel information and airline service ratings.
-
-The target variable was:
-
-* `satisfaction`
-
-The target contains two classes:
-
-* `satisfied`
-* `neutral or dissatisfied`
-
-Therefore, the machine-learning task was treated as a **supervised binary classification problem**.
-
-### Model Development
-
-An 80/20 stratified train/test split was used to preserve the satisfaction-class distribution.
-
-Categorical variables were one-hot encoded, while numerical variables were standardised as part of a Scikit-learn preprocessing pipeline.
-
-Three levels of predictive performance were evaluated:
-
-| Model | Accuracy |
-| --- | ---: |
-| Baseline Classifier | 56.7% |
-| Logistic Regression | 87.18% |
-| Random Forest | 96.42% |
-
-### Outcome
-
-The **Random Forest classifier** achieved the strongest performance with **96.42% test accuracy**.
-
-The model also performed strongly across both target classes:
-
-* Neutral or dissatisfied — **Precision: 0.96, Recall: 0.98, F1-score: 0.97**
-* Satisfied — **Precision: 0.97, Recall: 0.94, F1-score: 0.96**
-
-Random Forest was therefore selected as the final model.
-
-Feature importance analysis identified **Online boarding** and **Inflight Wi-Fi service** as the two most influential predictors, with travel class, type of travel, seat comfort and inflight entertainment also contributing strongly to predictions.
-
-These results demonstrate that the available passenger, travel and service information can be used effectively to predict passenger satisfaction.
-
-#  Research Questions
-
-The analysis will attempt to answer the following questions:
+The project investigates the following questions:
 
 1. What proportion of passengers are satisfied?
-
 2. Do passenger characteristics such as age, customer type or gender show different satisfaction patterns?
-
 3. Does passenger satisfaction vary according to travel type and class?
-
 4. Which airline service ratings have the strongest relationship with overall passenger satisfaction?
-
 5. Are departure and arrival delays associated with passenger satisfaction?
-
 6. Can passenger satisfaction be predicted using the available passenger and flight information?
-
----
-
-# Hypothesis Testing
-
-A formal hypothesis test was conducted to determine whether the relationship observed between type of travel and passenger satisfaction was statistically significant.
-
-## Hypothesis — Type of Travel and Passenger Satisfaction
-
-**H0 (Null Hypothesis):** Type of travel and passenger satisfaction are independent; there is no statistically significant association between them.
-
-**H1 (Alternative Hypothesis):** Type of travel and passenger satisfaction are associated; there is a statistically significant relationship between them.
-
-**Significance Level:** α = 0.05
-
-### Statistical Method
-
-A **Chi-square test of independence** was selected because both `Type of Travel` and `satisfaction` are categorical variables.
-
-The test produced:
-
-* **Chi-square statistic:** 20,882.22
-* **Degrees of freedom:** 1
-* **p-value:** < 0.001
-* **Minimum expected frequency:** 13,924.51
-
-The expected frequencies were well above 5, satisfying the expected-frequency assumption for the Chi-square test.
-
-### Result
-
-Because the p-value was below the significance level of 0.05, the **null hypothesis was rejected**.
-
-There is statistically significant evidence of an association between type of travel and passenger satisfaction.
-
-Business travellers showed substantially higher satisfaction than personal travellers.
-
-### Effect Size
-
-Cramér's V was calculated as:
-
-**Cramér's V = 0.449**
-
-This indicates a meaningful association between type of travel and passenger satisfaction.
-
-The result supports the exploratory analysis and demonstrates that type of travel is an important characteristic when analysing passenger satisfaction.
-
----
-
-# Project Methodology
-
-The project followed an end-to-end data analysis and machine-learning workflow.
-
-### 1. Business Understanding
-
-The business problem, project aim, target audience, business requirements and research questions were defined before beginning the analysis.
-
-### 2. Data Collection and Understanding
-
-The airline passenger satisfaction dataset was loaded and inspected to understand its structure, variables, data types, missing values and general data quality.
-
-### 3. Data Cleaning / ETL
-
-The dataset was cleaned by investigating missing values, duplicates and unnecessary identifier columns. The cleaned dataset was then saved for use throughout the remaining stages of the project.
-
-### 4. Exploratory Data Analysis
-
-Exploratory analysis was performed to investigate:
-
-* Passenger satisfaction distribution
-* Passenger characteristics
-* Travel characteristics
-* Airline service ratings
-* Flight delays
-* Relationships between numerical variables
-* Correlations between service ratings and satisfaction
-
-Multiple visualisation techniques were used to communicate the findings.
-
-### 5. Statistical Analysis
-
-Descriptive statistics were used to examine measures including mean, median and standard deviation.
-
-Basic probability was demonstrated by calculating the probability of selecting a satisfied passenger.
-
-A Chi-square test of independence was used to test the relationship between type of travel and passenger satisfaction, followed by Cramér's V to measure the strength of the association.
-
-### 6. Machine Learning
-
-The project treated passenger satisfaction prediction as a supervised binary classification problem.
-
-The data was divided into stratified training and testing sets. Categorical features were one-hot encoded and numerical features were standardised using a Scikit-learn preprocessing pipeline.
-
-A baseline classifier, Logistic Regression and Random Forest classifier were evaluated.
-
-Random Forest achieved the strongest performance and was selected as the final model.
-
-### 7. Interactive Dashboard
-
-A Streamlit dashboard was developed to communicate the main project findings to stakeholders.
-
-The dashboard presents:
-
-* Key passenger satisfaction metrics
-* Satisfaction distribution
-* Satisfaction by type of travel
-* Important service-rating differences
-* Machine-learning model performance
-* Important predictive features
-* Business recommendations
-
-### 8. Conclusions and Business Recommendations
-
-Findings from the exploratory analysis, statistical testing and machine-learning analysis were combined to identify practical areas that airlines could prioritise when seeking to improve passenger satisfaction.
-
 
 ---
 
 # Dataset
 
-The project uses the **Airline Passenger Satisfaction** dataset available from Kaggle.
+The project uses the Airline Passenger Satisfaction dataset published on Kaggle by Teejmahal.
 
-**Dataset source:**  
- 
-[Teejmahal — Airline Passenger Satisfaction (Kaggle)](https://www.kaggle.com/datasets/teejmahal20/airline-passenger-satisfaction)
+Dataset source:
 
-The dataset contains passenger demographic information, travel characteristics, airline service ratings, flight delays and an overall passenger satisfaction classification.
+**Teejmahal — Airline Passenger Satisfaction (Kaggle)**
 
-The original dataset provides separate training and testing CSV files. For this project, the data was combined during the data collection stage before cleaning and analysis.
+The original dataset contains separate training and testing CSV files. These were combined during the original data-collection stage before cleaning and analysis.
 
-## Main Variables
+The cleaned dataset contains:
+
+- **103,594 passenger records**
+- **23 variables**
 
 The dataset includes:
 
-* Passenger characteristics such as gender and age
-* Customer type
-* Type of travel
-* Travel class
-* Flight distance
-* Airline service ratings on a 0–5 scale
-* Departure and arrival delays
-* Passenger satisfaction
+- Gender
+- Customer Type
+- Age
+- Type of Travel
+- Class
+- Flight Distance
+- Airline service ratings
+- Departure delay
+- Arrival delay
+- Passenger satisfaction
 
-The target variable used for machine learning is `satisfaction`, containing:
+The target variable is:
 
-* `satisfied`
-* `neutral or dissatisfied`
+**satisfaction**
 
-## Data Quality and Cleaning
+with two categories:
 
-During the ETL process, the dataset was inspected for:
+- `satisfied`
+- `neutral or dissatisfied`
 
-* Missing values
-* Duplicate records
-* Data types
-* Unnecessary identifier columns
-* Numerical distributions and potential outliers
+---
+
+# Data Quality and Cleaning
+
+During the original ETL process, the dataset was inspected for:
+
+- Missing values
+- Duplicate records
+- Data types
+- Unnecessary identifier columns
+- Numerical distributions
+- Potential outliers
 
 The unnecessary `id` and `Unnamed: 0` columns were removed.
 
-Missing values in `Arrival Delay in Minutes` were handled during the cleaning process, and the cleaned dataset was saved as:
+Missing values in `Arrival Delay in Minutes` were handled during the cleaning process.
 
-`data/clean_data/airline_clean.csv`
-
-The cleaned dataset contains **103,594 passenger records and 23 columns** and was used consistently for exploratory analysis, statistical analysis and machine learning.
-
-# Project Structure
-
-The project is organised into separate notebooks and application files so that each stage of the analysis can be followed clearly.
+The validated cleaned dataset was stored as:
 
 ```text
-airline-passenger-satisfaction/
-│
-├── app/
-│   └── app.py
-│
-├── data/
-│   └── clean_data/
-│       └── airline_clean.csv
-│
-├── images/
-│
-├── jupyter_notebooks/
-│   ├── 01DataCollection.ipynb
-│   ├── 02DataCleaning.ipynb
-│   ├── 03EDA.ipynb
-│   ├── 04statisticalanalysis.ipynb
-│   └── 05machinelearning.ipynb
-│
-├── .gitignore
-├── Procfile
-├── README.md
-├── requirements.txt
-└── setup.sh
+data/clean_data/airline_clean.csv
+```
 
+This dataset contains 103,594 passenger records and 23 columns and provides the analytical foundation for the Unit 3 dashboard.
 
+---
 
-# Project Success Criteria
+# Data Management and Versioning
 
-The project was considered successful based on the following criteria:
+The project uses a structured data pipeline to separate the validated cleaned dataset from dashboard-specific analytical outputs.
 
-* Clearly describe passenger satisfaction within the dataset.
-* Identify meaningful relationships between passenger/travel characteristics and satisfaction.
-* Identify airline services that appear strongly associated with satisfaction.
-* Evaluate the relationship between flight delays and satisfaction.
-* Statistically test a relevant relationship identified during the analysis.
-* Develop and evaluate machine-learning classification models.
-* Present the main findings clearly through an interactive dashboard.
-* Provide conclusions and business recommendations supported by the analysis.
+```text
+Original Kaggle Data
+        ↓
+Unit 2 Data Cleaning
+        ↓
+data/clean_data/airline_clean.csv
+        ↓
+Unit 3 Reproducible Analysis Scripts
+        ↓
+data/dashboard_data/
+        ↓
+Streamlit Dashboard
+```
 
-All of these criteria were addressed through the exploratory analysis, statistical analysis, machine-learning modelling and interactive dashboard.
+The original cleaned dataset is retained rather than duplicated.
 
-----
+Dashboard-specific analytical outputs are stored separately under:
 
+```text
+data/dashboard_data/
+```
 
+Current versioned outputs include:
 
+```text
+satisfaction_by_travel_type_v1.csv
+satisfaction_by_class_v1.csv
+service_rating_summary_v1.csv
+hypothesis_results_v1.csv
+service_hypothesis_results_v1.csv
+```
 
-# Main Findings and Conclusions
+The `v1` naming convention provides a simple version identifier and allows future analytical outputs to be updated without silently replacing previous versions.
 
-The analysis identified several important patterns associated with airline passenger satisfaction.
+Reproducible Python scripts are stored in:
 
-## Passenger Satisfaction
+```text
+scripts/
+```
 
-Approximately **43.3% of passengers were satisfied**, while **56.7% were neutral or dissatisfied**. This means neutral or dissatisfied passengers formed the majority class in the dataset.
+including:
 
-## Passenger and Travel Characteristics
+```text
+generate_dashboard_data.py
+validate_hypotheses.py
+```
 
-Travel characteristics showed clear differences in satisfaction.
+This structure improves reproducibility, traceability and separation between cleaned source data and dashboard-ready analytical outputs.
 
-Business travellers were substantially more likely to be satisfied than personal travellers. A Chi-square test confirmed a statistically significant association between type of travel and satisfaction (**p < 0.001**), with **Cramér's V = 0.449** indicating a meaningful association.
+---
 
-Travel class was also important. Business Class passengers showed considerably higher satisfaction than Eco and Eco Plus passengers.
+# Project Methodology
 
-## Airline Service Experience
+The project follows an end-to-end analytical workflow.
 
-Satisfied passengers generally provided higher service ratings.
+## 1. Business Understanding
 
-**Online boarding** showed the largest difference in average service rating between satisfied and neutral/dissatisfied passengers.
+The project purpose, business requirements, research questions and target audiences were defined to ensure that the analysis and dashboard address a clear business problem.
 
-Other important service areas included:
+## 2. Data Collection and Understanding
 
-* Inflight Wi-Fi service
-* Seat comfort
-* Inflight entertainment
-* On-board service
-* Leg room service
-* Ease of online booking
+The airline passenger dataset was inspected to understand:
 
-These findings suggest that both the digital passenger journey and onboard experience are important when investigating satisfaction.
+- Dataset dimensions
+- Variable types
+- Missing values
+- Data quality
+- Passenger characteristics
+- Travel information
+- Service-rating variables
+- Satisfaction categories
 
-## Flight Delays
+## 3. Data Cleaning / ETL
 
-Departure and arrival delays were strongly right-skewed. Most passengers experienced little or no delay, while a smaller number experienced very large delays.
+The original dataset was cleaned and transformed into a validated analytical dataset.
 
-Longer delays were generally associated with lower satisfaction, although the analysis indicates that passenger satisfaction depends on several factors rather than delay alone.
+The cleaned dataset is used consistently across exploratory analysis, statistical testing, machine learning and the interactive application.
 
-## Machine Learning
+## 4. Exploratory Data Analysis
 
-The machine-learning analysis demonstrated that passenger satisfaction could be predicted effectively using the available features.
+Exploratory analysis investigated:
 
-The models achieved:
+- Overall passenger satisfaction
+- Passenger characteristics
+- Customer type
+- Type of travel
+- Travel class
+- Flight distance
+- Airline service ratings
+- Departure and arrival delays
+- Relationships between variables
 
-* **Baseline Classifier:** 56.7%
-* **Logistic Regression:** 87.18%
-* **Random Forest:** 96.42%
+## 5. Statistical Analysis
 
-Random Forest was selected as the final model because it achieved the strongest overall test performance.
+Statistical analysis was used to determine whether important patterns observed during exploratory analysis were supported by statistical evidence.
 
-Feature importance identified **Online boarding** and **Inflight Wi-Fi service** as the two strongest predictors, with travel class, type of travel and several onboard service ratings also contributing to predictions.
+Methods include:
 
-The predictive relationships identified by the model should not be interpreted as evidence of causation.
+- Descriptive statistics
+- Chi-square tests of independence
+- Cramér's V effect size
+- Spearman rank correlation
 
+## 6. Machine Learning
+
+Passenger satisfaction prediction was treated as a supervised binary classification problem.
+
+Models evaluated included:
+
+- Baseline classifier
+- Logistic Regression
+- Random Forest
+
+Random Forest achieved the strongest test accuracy and was selected as the final predictive model.
+
+## 7. Dashboard Data Preparation
+
+Reproducible Python scripts generate versioned analytical outputs for use within the Streamlit application.
+
+## 8. Interactive Data Application
+
+The final Streamlit application combines:
+
+- Interactive passenger exploration
+- Business-focused visualisations
+- Service-experience analysis
+- Statistical hypothesis results
+- Predictive-model findings
+- Project methodology
+- Ethics and governance information
+
+---
+
+# Project Hypotheses
+
+Three hypotheses were selected to validate important relationships identified during the analysis.
+
+---
+
+## H1 — Type of Travel and Passenger Satisfaction
+
+### Null Hypothesis — H0
+
+Type of travel and passenger satisfaction are independent; there is no statistically significant association between them.
+
+### Alternative Hypothesis — H1
+
+Type of travel and passenger satisfaction are associated; there is a statistically significant relationship between them.
+
+### Method
+
+A **Chi-square test of independence** was selected because both variables are categorical.
+
+Cramér's V was used to measure the strength of the association.
+
+### Results
+
+- Chi-square statistic: **20,882.22**
+- Degrees of freedom: **1**
+- p-value: **p < 0.001**
+- Cramér's V: **0.449**
+- Significance level: **α = 0.05**
+
+### Decision
+
+The null hypothesis was rejected.
+
+There is statistically significant evidence of an association between type of travel and passenger satisfaction.
+
+Business travellers showed substantially higher satisfaction than personal travellers.
+
+Cramér's V of 0.449 indicates a meaningful association within this dataset.
+
+This relationship should not be interpreted as evidence that travel type directly causes satisfaction.
+
+---
+
+## H2 — Travel Class and Passenger Satisfaction
+
+### Null Hypothesis — H0
+
+Travel class and passenger satisfaction are independent; there is no statistically significant association between them.
+
+### Alternative Hypothesis — H1
+
+Travel class and passenger satisfaction are associated; there is a statistically significant relationship between them.
+
+### Method
+
+A **Chi-square test of independence** was used because both variables are categorical.
+
+Cramér's V was calculated to measure association strength.
+
+### Results
+
+- Chi-square statistic: **26,402.22**
+- Degrees of freedom: **2**
+- p-value: **p < 0.001**
+- Cramér's V: **0.505**
+- Significance level: **α = 0.05**
+
+### Decision
+
+The null hypothesis was rejected.
+
+There is statistically significant evidence of an association between travel class and passenger satisfaction.
+
+Business Class passengers showed considerably higher satisfaction than Eco and Eco Plus passengers.
+
+Cramér's V of 0.505 indicates a substantial association within this dataset.
+
+The result demonstrates association rather than causation.
+
+---
+
+## H3 — Airline Service Ratings and Passenger Satisfaction
+
+### Hypothesis
+
+Airline service ratings are associated with passenger satisfaction, with some service areas showing stronger relationships than others.
+
+### Method
+
+Service ratings use ordered rating scales, while satisfaction was represented as a binary outcome.
+
+**Spearman rank correlation** was therefore used to measure the strength and direction of the relationship between individual service ratings and passenger satisfaction.
+
+### Strongest Positive Associations
+
+| Service | Spearman Correlation |
+|---|---:|
+| Online boarding | 0.551 |
+| Inflight entertainment | 0.400 |
+| Seat comfort | 0.362 |
+| On-board service | 0.328 |
+| Leg room service | 0.318 |
+| Cleanliness | 0.303 |
+| Inflight Wi-Fi service | 0.287 |
+
+Online boarding showed the strongest positive relationship with passenger satisfaction.
+
+Gate location showed essentially no relationship with satisfaction:
+
+- Spearman correlation approximately **0.000**
+- p-value approximately **0.901**
+
+Departure/Arrival time convenient produced a very small negative relationship:
+
+- Spearman correlation: **-0.050**
+
+Although this result was statistically significant, the effect size is very small. The large sample size means even weak relationships can produce small p-values.
+
+For this reason, both **statistical significance and relationship strength** are considered when interpreting the results.
+
+These correlations describe associations and do not demonstrate causal relationships.
+
+---
+
+# Main Analytical Findings
+
+## Overall Passenger Satisfaction
+
+Approximately:
+
+- **43.3%** of passengers were satisfied.
+- **56.7%** were neutral or dissatisfied.
+
+Neutral or dissatisfied passengers therefore form the majority category in the dataset.
+
+---
+
+## Type of Travel
+
+Business travel:
+
+- Neutral or dissatisfied: **29,831**
+- Satisfied: **41,634**
+
+Personal travel:
+
+- Neutral or dissatisfied: **28,866**
+- Satisfied: **3,263**
+
+The statistical analysis confirmed that type of travel has a meaningful association with passenger satisfaction.
+
+---
+
+## Travel Class
+
+Business Class:
+
+- Neutral or dissatisfied: **15,143**
+- Satisfied: **34,390**
+
+Eco:
+
+- Neutral or dissatisfied: **37,922**
+- Satisfied: **8,671**
+
+Eco Plus:
+
+- Neutral or dissatisfied: **5,632**
+- Satisfied: **1,836**
+
+Travel class demonstrated a substantial association with passenger satisfaction.
+
+---
+
+# Service Experience Findings
+
+Satisfied passengers generally provided higher service ratings than neutral or dissatisfied passengers.
+
+The largest differences in average ratings were:
+
+| Service | Neutral/Dissatisfied | Satisfied | Difference |
+|---|---:|---:|---:|
+| Online boarding | 2.66 | 4.03 | 1.37 |
+| Inflight entertainment | 2.89 | 3.97 | 1.07 |
+| Seat comfort | 3.04 | 3.97 | 0.93 |
+| On-board service | 3.02 | 3.86 | 0.84 |
+| Leg room service | 2.99 | 3.82 | 0.83 |
+| Cleanliness | 2.94 | 3.74 | 0.81 |
+
+Online boarding therefore stands out in both the average-rating comparison and the statistical association analysis.
+
+However, differences in group averages, correlations and machine-learning feature importance measure different analytical concepts and should not be interpreted as interchangeable measures.
+
+---
+
+# Flight Delay Findings
+
+Departure and arrival delay variables showed strongly right-skewed distributions.
+
+The mean departure delay was approximately **14.75 minutes**, while the mean arrival delay was approximately **15.18 minutes**.
+
+The median for both variables was **0 minutes**.
+
+This indicates that many passengers experienced little or no delay while a smaller number experienced considerably larger delays.
+
+Longer delays were generally associated with lower satisfaction, although delay is only one of several factors associated with the passenger experience.
+
+---
+
+# Machine Learning
+
+The project investigated whether passenger satisfaction could be predicted using the available passenger, travel and service information.
+
+The target was:
+
+```text
+satisfaction
+```
+
+with two classes:
+
+```text
+satisfied
+neutral or dissatisfied
+```
+
+An 80/20 stratified train/test split was used to preserve the target-class distribution.
+
+Categorical variables were one-hot encoded and numerical variables were standardised as part of the Scikit-learn preprocessing workflow.
+
+## Model Performance
+
+| Model | Accuracy |
+|---|---:|
+| Baseline Classifier | 56.70% |
+| Logistic Regression | 87.18% |
+| Random Forest | 96.42% |
+
+Random Forest achieved the strongest test accuracy and was selected as the final model.
+
+The final model achieved:
+
+**Neutral or dissatisfied**
+
+- Precision: 0.96
+- Recall: 0.98
+- F1-score: 0.97
+
+**Satisfied**
+
+- Precision: 0.97
+- Recall: 0.94
+- F1-score: 0.96
+
+Feature-importance analysis identified important predictive variables including:
+
+- Online boarding
+- Inflight Wi-Fi service
+- Travel class
+- Type of travel
+- Seat comfort
+- Inflight entertainment
+- Ease of online booking
+- On-board service
+
+Feature importance represents predictive contribution within the model and does not demonstrate that a variable causes passenger satisfaction.
+
+---
+
+# Interactive Streamlit Dashboard
+
+The Unit 3 application was designed as a multi-page Streamlit dashboard.
+
+The application contains five main sections.
+
+## 1. Executive Overview
+
+Designed primarily for non-technical stakeholders.
+
+Provides:
+
+- Passenger-count KPI
+- Satisfaction-rate KPI
+- Neutral/dissatisfied KPI
+- Overall satisfaction visualisation
+- Interactive passenger filters
+- Key business interpretation
+
+This page supports **BR1 and BR3**.
+
+---
+
+## 2. Passenger Insights
+
+Allows users to explore satisfaction patterns according to:
+
+- Type of Travel
+- Travel Class
+- Customer Type
+- Gender
+- Age
+
+Grouped percentage charts are used so that satisfaction can be compared within passenger groups rather than relying only on raw passenger counts.
+
+An age distribution provides an additional visualisation type and allows users to examine differences in passenger age.
+
+This page supports **BR1 and BR3**.
+
+---
+
+## 3. Service Experience
+
+Provides analysis of airline service ratings.
+
+The page includes:
+
+- Average service-rating differences between satisfaction groups
+- Spearman correlation rankings
+- Key service-association metrics
+- Plain-language interpretation
+- Statistical interpretation warnings
+
+Online boarding, inflight entertainment and seat comfort show some of the strongest positive associations with satisfaction.
+
+This page supports **BR2 and BR3**.
+
+---
+
+## 4. Statistical & Predictive Analysis
+
+Designed primarily for technical users.
+
+The page presents:
+
+- H1 — Type of Travel vs Satisfaction
+- H2 — Travel Class vs Satisfaction
+- H3 — Service Ratings vs Satisfaction
+- Chi-square statistics
+- Cramér's V
+- p-value interpretation
+- Spearman correlations
+- Complete service-correlation results
+- Machine-learning model comparison
+- Technical interpretation
+- Causality warnings
+
+This page supports **BR2 and BR4**.
+
+---
+
+## 5. Project Information
+
+Provides supporting project documentation directly within the application.
+
+Topics include:
+
+- Project purpose
+- Business requirements
+- Target audiences
+- Data and methodology
+- Ethics
+- Privacy
+- GDPR
+- Data governance
+- Accessibility
+- User experience
+- Project limitations
+- Responsible interpretation
+
+This page primarily supports **BR4** and the project's responsible-data objectives.
+
+---
+
+# Dashboard User Experience and Accessibility
+
+The dashboard was designed to communicate analytical information to both technical and non-technical users.
+
+UX and accessibility considerations include:
+
+- Clear page navigation
+- Descriptive page headings
+- KPI metrics
+- Plain-language explanations
+- Chart titles and axis labels
+- Legends
+- Interactive filters
+- Percentage-based comparisons where appropriate
+- Technical results separated from business-facing analysis
+- Warnings where statistical results could be misinterpreted
+- Multiple forms of communication rather than relying on charts alone
+
+The dashboard provides both visual and written interpretations so users are not required to interpret charts without supporting context.
+
+The application also avoids presenting statistical association or machine-learning feature importance as proof of causation.
+
+---
+
+# Ethics, Privacy and Responsible Data Use
+
+Responsible data practice was considered throughout the project.
+
+The analytical dataset does not contain direct passenger identifiers such as:
+
+- Passenger names
+- Email addresses
+- Telephone numbers
+- Home addresses
+
+Unnecessary identifier columns from the original dataset were removed during data cleaning.
+
+Only variables relevant to the analytical purpose were retained.
+
+This supports the principle of **data minimisation**.
+
+The analysis is intended to understand aggregate passenger satisfaction patterns rather than identify individual passengers.
+
+---
+
+# GDPR and Data Governance Considerations
+
+Although the project uses a public analytical dataset rather than a live airline customer database, the principles of responsible data governance remain relevant.
+
+Important considerations include:
+
+## Purpose Limitation
+
+Passenger information should only be used for clearly defined and legitimate analytical purposes.
+
+## Data Minimisation
+
+Only information necessary for the analysis should be collected and retained.
+
+## Access Control
+
+In a real operational environment, passenger-level information should only be available to authorised users.
+
+## Data Quality
+
+Analytical conclusions depend on accurate, complete and appropriately maintained data.
+
+## Retention
+
+Passenger-level data should not be retained indefinitely without a legitimate business or legal requirement.
+
+## Transparency
+
+Organisations should clearly explain how customer information is used for analytics and predictive modelling.
+
+## Accountability
+
+Analytical models and dashboards should have documented ownership, validation processes and appropriate human oversight.
+
+A real airline deployment involving identifiable passenger data would require additional organisational and legal controls based on the applicable jurisdiction, lawful basis for processing, security requirements and organisational policies.
+
+---
+
+# Responsible Interpretation
+
+The dashboard identifies:
+
+- Statistical associations
+- Group differences
+- Correlations
+- Predictive relationships
+
+These results should not automatically be interpreted as causal relationships.
+
+For example, Business Class passengers show higher satisfaction in this dataset, but this does not prove that changing a passenger's travel class alone would cause satisfaction to increase.
+
+Similarly, Random Forest feature importance describes how useful a feature was for prediction within the trained model. It does not establish a causal mechanism.
+
+Dashboard findings should therefore be used as evidence to support further investigation and business decision-making rather than as automatic instructions for operational action.
+
+---
+
+# Project Limitations
+
+Several limitations should be considered when interpreting the project.
+
+- The analysis is based on a historical public dataset rather than live airline operational data.
+- The dataset does not provide detailed information about the airline's operational environment.
+- Passenger service ratings are subjective.
+- Statistical associations do not prove causation.
+- Machine-learning performance reflects the available dataset and may not generalise to future passengers or another airline.
+- Predictive models may experience performance degradation when applied to data that differs from the training data.
+- Some statistically significant results may have very small practical effects because of the large sample size.
+- The dashboard is intended for analytical exploration and decision support rather than automated decision-making.
 
 ---
 
 # Business Recommendations
 
-Based on the findings from the exploratory analysis, statistical testing and machine-learning model, the following recommendations could be considered by airline stakeholders.
+Based on the combined exploratory, statistical and predictive evidence, several areas could be investigated by airline stakeholders.
 
-## 1. Prioritise the Online Boarding Experience
+## 1. Review the Online Boarding Experience
 
-Online boarding showed the largest service-rating difference between satisfaction groups and was the most important feature in the Random Forest model.
+Online boarding produced:
 
-Airlines should therefore review the online boarding journey and identify opportunities to make the process simpler, more reliable and easier for passengers to use.
+- The largest average service-rating difference between satisfaction groups.
+- The strongest Spearman association among the service ratings examined.
+- Strong predictive importance in the Random Forest analysis.
 
-## 2. Improve Inflight Wi-Fi Service
+Airlines could investigate the usability, reliability and convenience of the online boarding process.
 
-Inflight Wi-Fi was one of the strongest predictors of passenger satisfaction.
+## 2. Investigate the Onboard Passenger Experience
 
-Improving connection reliability and the overall inflight connectivity experience may therefore be an important area for customer-experience improvement.
+Inflight entertainment, seat comfort, on-board service, leg room and cleanliness all showed meaningful differences between satisfaction groups.
 
-## 3. Focus on Key Onboard Services
+These areas could be prioritised for further customer-experience investigation.
 
-Seat comfort, inflight entertainment, on-board service and leg room were all associated with differences in passenger satisfaction.
+## 3. Analyse Passenger Segments Separately
 
-These areas could be prioritised when reviewing the onboard passenger experience.
+Type of travel and travel class demonstrated strong statistical associations with satisfaction.
 
-## 4. Consider Different Passenger Segments
+Airlines could therefore examine passenger segments separately rather than assuming that all travellers have identical expectations.
 
-Satisfaction varied considerably according to type of travel and travel class.
+## 4. Continue Monitoring Digital Services
 
-Airlines could therefore analyse Business, Personal, Business Class, Eco Plus and Eco passengers separately when developing customer-experience strategies rather than assuming that all passengers have the same expectations.
+Online boarding and inflight Wi-Fi appeared prominently in the analytical and predictive findings.
 
-## 5. Continue Monitoring Flight Delays
+Digital passenger services should therefore remain an important area for customer-experience monitoring.
 
-Although service-related variables were particularly important, longer delays were generally associated with lower passenger satisfaction.
+## 5. Continue Monitoring Severe Flight Delays
 
-Operational teams should continue monitoring severe departure and arrival delays and investigate opportunities to reduce disruption and improve communication when delays occur.
+Most passengers experienced little or no delay, but a smaller group experienced considerably larger delays.
 
-## 6. Use Predictive Modelling as Decision Support
+Operational teams could continue monitoring severe disruptions and passenger communication during these events.
 
-The Random Forest model achieved **96.42% test accuracy**, demonstrating strong predictive performance within this dataset.
+## 6. Use Predictive Models as Decision Support
 
-A predictive model could potentially support the identification of passengers at greater risk of dissatisfaction. However, the model should be validated on new and operational data before being used for real-world decision-making.
+Random Forest achieved **96.42% test accuracy** within the available dataset.
 
-These recommendations are based on associations and predictive relationships identified within the available dataset and should not be interpreted as proof of direct causal relationships.
+However, any real-world deployment should include:
 
+- Validation on new data
+- Performance monitoring
+- Bias and fairness assessment
+- Data-governance controls
+- Human oversight
 
------
+---
 
-# Technologies Used
+# Project Planning
 
-## Languages
+The project was managed using a GitHub Kanban project board.
 
-* **Python** — data cleaning, analysis, statistical testing, machine learning and dashboard development.
-* **Markdown** — project documentation and notebook explanations.
-
-## Python Libraries
-
-* **Pandas** — data manipulation, cleaning and analysis.
-* **NumPy** — numerical operations.
-* **Matplotlib** — data visualisation.
-* **Seaborn** — statistical data visualisation.
-* **SciPy** — statistical hypothesis testing.
-* **Scikit-learn** — preprocessing, machine-learning pipelines, classification models and model evaluation.
-* **Streamlit** — development of the interactive dashboard.
-
-## Development Tools
-
-* **Jupyter Notebook** — development and documentation of the analytical workflow.
-* **Visual Studio Code** — project development environment.
-* **Git** — version control.
-* **GitHub** — source-code repository and project version management.
-
-----
-
-
-# Installation and Local Setup
-
-To run this project locally:
-
-1. Clone the GitHub repository. (https://github.com/Haneenamathar/airline-passenger-satisfaction.git)
-
-2. Open the project folder in Visual Studio Code.
-
-3. Create a virtual environment:
-
-**
-python -m venv .venv
-
-
- Activate the virtual environment:
-
-**
-source .venv/Scripts/activate
-
-
-Install the required Python packages:
-
-**
-pip install -r requirements.txt
-
-
- The analysis notebooks are available in the `jupyter_notebooks/` folder and should be viewed in numerical order.
-
- To run the interactive dashboard, use:
-
-**
-streamlit run app/app.py
-
-The dashboard will then open in a web browser.
-
-
-
-----
-
-# Deployment
-
-The interactive dashboard was developed using Streamlit and tested locally before deployment.
-
-The project includes the following files required to support deployment:
-
-* `Procfile` — defines the command used to start the Streamlit application.
-* `setup.sh` — configures Streamlit for the deployment environment.
-* `requirements.txt` — contains the Python packages required to run the project.
-
-The application is started using:
+Tasks were organised using the following workflow:
 
 ```text
-web: sh setup.sh && streamlit run app/app.py
+Backlog
+   ↓
+Ready
+   ↓
+In Progress
+   ↓
+In Review
+   ↓
+Done
 ```
 
-The `setup.sh` file configures Streamlit to run in headless mode and use the port provided by the deployment environment.
+The project plan included:
 
-Before deployment, the application was tested locally using:
+- Assessment requirement review
+- Project purpose and business requirements
+- Target audience definition
+- Hypothesis development
+- Data management and versioning
+- Dashboard development
+- Interactive visualisation
+- Statistical validation
+- Ethics and governance
+- UX and accessibility
+- Testing
+- Documentation
+- Deployment
+- Final assessment review
 
-```bash
-streamlit run app/app.py
+The Kanban workflow was updated throughout development so that project progress and remaining work could be tracked.
+
+---
+
+# Implementation, Maintenance and Evaluation Plan
+
+The application was implemented using a staged development process.
+
+## Implementation
+
+Development progressed through:
+
+1. Assessment requirement review
+2. Business requirement definition
+3. Dataset and existing-analysis review
+4. Hypothesis definition
+5. Reproducible dashboard-data generation
+6. Statistical validation
+7. Streamlit page development
+8. Interactive visualisation
+9. Ethics and governance documentation
+10. Functional testing
+11. Documentation
+12. Deployment and final assessment review
+
+## Maintenance
+
+If the project were maintained after deployment, future updates should include:
+
+- Dependency updates
+- Streamlit compatibility testing
+- Data-quality checks
+- Validation of new dataset versions
+- Dashboard regression testing
+- Documentation updates
+- Model-performance monitoring where new data becomes available
+
+## Evaluation
+
+Future versions of the project could be evaluated using:
+
+- Dashboard usability feedback
+- Stakeholder feedback
+- Data-quality metrics
+- Application reliability
+- Model performance on new data
+- Changes in passenger behaviour
+- Accessibility testing
+- Relevance of business recommendations
+
+Versioned analytical outputs should be retained so changes can be traced between project releases.
+
+---
+
+# Testing and Validation
+
+Testing was performed throughout development.
+
+## Notebook Testing
+
+The analytical notebooks were tested using a fresh kernel and **Restart Kernel → Run All**.
+
+This helped confirm that:
+
+- Cells execute in the correct order.
+- Variables do not depend on previous sessions.
+- Data files load correctly.
+- Analytical outputs are reproducible.
+- No execution errors remain.
+
+## Statistical Validation
+
+Hypothesis calculations were implemented through a reproducible Python script.
+
+The resulting outputs were saved in versioned dashboard-data files.
+
+The dashboard displays very small p-values as:
+
+```text
+p < 0.001
 ```
 
-A Python syntax check was also performed using:
+rather than reporting them as `p = 0`.
 
-```bash
-python -m py_compile app/app.py
-```
+This avoids incorrectly implying that the probability is mathematically zero.
 
-The dashboard was manually tested to confirm that the passenger filters, reset button, KPI metrics, charts and machine-learning results displayed correctly.
-
-The final dashboard includes interactive filters for:
-
-* Type of Travel
-* Travel Class
-* Customer Type
-* Gender
-
-The KPI metrics and relevant analytical charts update according to the selected filters, while the machine-learning performance results remain fixed because they represent the model evaluation performed on the original test dataset.
-
-----
-
-# Testing and Debugging
-
-Testing and debugging were carried out throughout the project to ensure that the notebooks, machine-learning pipeline and interactive dashboard worked correctly.
-
-## Jupyter Notebook Testing
-
-Each completed notebook was tested using a fresh kernel and **Restart Kernel → Run All**.
-
-This ensured that:
-
-* Cells executed successfully in the correct order.
-* Variables did not depend on previous notebook sessions.
-* Data files loaded correctly.
-* Analytical outputs and visualisations were reproducible.
-* No execution errors remained before committing the notebook to GitHub.
-
-## Machine Learning Debugging
-
-During Logistic Regression development, the model initially reached the maximum number of iterations before convergence.
-
-To address this, numerical features were standardised using `StandardScaler` within the preprocessing pipeline. The model was then retrained and completed successfully without the convergence warning.
-
-The final Logistic Regression and Random Forest models were evaluated using accuracy, precision, recall, F1-score and confusion matrices.
-
-## Streamlit Dashboard Testing
+## Streamlit Functional Testing
 
 The Streamlit application was tested locally using:
 
@@ -688,35 +992,304 @@ The Streamlit application was tested locally using:
 streamlit run app/app.py
 ```
 
-The application was checked to confirm that:
+The five dashboard pages were manually tested.
 
-* The cleaned dataset loaded successfully.
-* KPI metrics displayed correctly.
-* Dashboard charts rendered without errors.
-* Type of Travel, Travel Class, Customer Type and Gender filters worked correctly.
-* KPI metrics and relevant charts updated when filters were changed.
-* The Reset Filters button returned all filters to their default values.
-* Machine-learning results remained unchanged by dashboard filters because they represent evaluation results from the original test dataset.
+### Executive Overview
 
-The application was also checked for Python syntax errors using:
+Validated:
 
-```bash
-python -m py_compile app/app.py
+- KPI metrics load correctly.
+- Satisfaction visualisation loads.
+- Type of Travel filter updates the relevant results.
+
+### Passenger Insights
+
+Validated:
+
+- Type of Travel chart
+- Travel Class chart
+- Customer Type chart
+- Gender chart
+- Age distribution
+- Passenger filters update relevant visualisations
+
+### Service Experience
+
+Validated:
+
+- Service-rating comparison chart
+- Spearman correlation chart
+- Key service metrics
+- Written interpretation
+
+### Statistical & Predictive Analysis
+
+Validated:
+
+- H1 results
+- H2 results
+- H3 results
+- p-value formatting
+- Complete service-correlation results
+- Model-performance comparison
+
+### Project Information
+
+Validated that all documentation sections load without application errors.
+
+An empty-filter case was also tested to confirm that the application handles selections that return no passenger records without failing unexpectedly.
+
+All functional tests completed successfully during the final local validation stage.
+
+---
+
+# Technical Challenges and Solutions
+
+Several practical challenges were encountered during the project.
+
+## Logistic Regression Convergence
+
+During the original machine-learning development, Logistic Regression initially reached the maximum number of iterations before convergence.
+
+Numerical features were standardised using `StandardScaler` within the preprocessing pipeline.
+
+The model was then retrained successfully.
+
+## Streamlit Application Development
+
+Dashboard development required careful management of:
+
+- File paths
+- Application structure
+- Widget filtering
+- Data transformations
+- Plotly visualisations
+- Streamlit layout
+- Statistical output formatting
+
+Issues discovered during development were corrected and retested before commits were made.
+
+## Statistical Result Communication
+
+The hypothesis-validation output produced extremely small p-values that may appear as `0.0` when saved numerically.
+
+The dashboard therefore presents these results as:
+
+```text
+p < 0.001
 ```
 
-The syntax validation completed without errors.
+which is a more appropriate interpretation.
 
-## Debugging Examples
+## Communicating Statistical Significance
 
-During development, several issues were identified and corrected, including:
+The large dataset means that even very small relationships can become statistically significant.
 
-* An initially empty `app.py` file causing a blank Streamlit page.
-* Incorrect indentation while adding interactive dashboard filters.
-* Streamlit session-state handling for the Reset Filters button.
-* Logistic Regression convergence during model training.
-* The `Procfile` initially pointing to `app.py` instead of the correct `app/app.py` location.
+For this reason, the project considers both:
 
-These issues were resolved and the affected components were retested before finalising the project.
+- p-values
+- effect or relationship size
+
+rather than interpreting statistical significance alone.
+
+## Technical and Non-Technical Communication
+
+Another challenge was presenting the same analytical project to audiences with different levels of technical knowledge.
+
+This was addressed by separating business-focused dashboard pages from the detailed Statistical & Predictive Analysis page.
+
+---
+
+# Project Reflection
+
+This capstone project extended the original airline passenger satisfaction analysis into a more complete interactive data application.
+
+One of the most important learning outcomes was understanding that producing an accurate analysis is only part of a data project. Analytical results must also be communicated in a way that is appropriate for the intended audience.
+
+The project therefore required translating statistical and machine-learning findings into clear visualisations, KPI metrics and plain-language explanations while retaining enough technical information for users who want to understand the evidence behind the conclusions.
+
+Developing additional hypothesis tests also reinforced the distinction between statistical significance and practical importance. The large dataset demonstrated that a very small relationship can still produce a very small p-value, making effect-size interpretation essential.
+
+The project also strengthened my understanding of reproducibility. Dashboard outputs were generated through dedicated scripts and stored as versioned analytical files rather than relying entirely on manually copied results.
+
+Ethics and governance became a more explicit part of the project during the capstone stage. Considering data minimisation, privacy, transparency, access control, retention, model limitations and responsible interpretation demonstrated that analytical quality involves more than technical model performance.
+
+The Streamlit development process also provided practical experience in designing an application for different audiences. Business users require concise insights and intuitive visualisations, while technical users require statistical evidence, methodology and limitations.
+
+Overall, the project strengthened my understanding of how business requirements, data preparation, exploratory analysis, statistics, machine learning, governance, visual communication and application development work together within an end-to-end data analytics project.
+
+---
+
+# Project Structure
+
+```text
+airline-passenger-satisfaction-insights/
+│
+├── app/
+│   └── app.py
+│
+├── data/
+│   ├── clean_data/
+│   │   └── airline_clean.csv
+│   │
+│   └── dashboard_data/
+│       ├── satisfaction_by_travel_type_v1.csv
+│       ├── satisfaction_by_class_v1.csv
+│       ├── service_rating_summary_v1.csv
+│       ├── hypothesis_results_v1.csv
+│       └── service_hypothesis_results_v1.csv
+│
+├── jupyter_notebooks/
+│   ├── 01datacollection.ipynb
+│   ├── 02datacleaning.ipynb
+│   ├── 03EDA.ipynb
+│   ├── 04statisticalanalysis.ipynb
+│   └── 05machinelearning.ipynb
+│
+├── scripts/
+│   ├── generate_dashboard_data.py
+│   └── validate_hypotheses.py
+│
+├── .gitignore
+├── .python-version
+├── .slugignore
+├── Procfile
+├── README.md
+├── requirements.txt
+└── setup.sh
+```
+
+---
+
+# Technologies Used
+
+## Languages
+
+- **Python** — data preparation, analysis, statistics, machine learning and dashboard development.
+- **Markdown** — project documentation and notebook explanations.
+
+## Python Libraries
+
+- **Pandas** — data manipulation and analysis.
+- **NumPy** — numerical operations.
+- **Matplotlib** — data visualisation.
+- **Seaborn** — statistical visualisation in the analytical notebooks.
+- **SciPy** — hypothesis testing and statistical analysis.
+- **Scikit-learn** — preprocessing, machine learning and model evaluation.
+- **Plotly** — interactive dashboard visualisations.
+- **Streamlit** — interactive data-application development.
+
+## Development and Project Tools
+
+- **Jupyter Notebook**
+- **Visual Studio Code**
+- **Git**
+- **GitHub**
+- **GitHub Projects / Kanban**
+
+---
+
+# Installation and Local Setup
+
+To run the project locally:
+
+## 1. Clone the repository
+
+```bash
+git clone https://github.com/Haneenamathar/airline-passenger-satisfaction-insights.git
+```
+
+## 2. Enter the project directory
+
+```bash
+cd airline-passenger-satisfaction-insights
+```
+
+## 3. Create a virtual environment
+
+```bash
+python -m venv .venv
+```
+
+## 4. Activate the virtual environment
+
+For Git Bash on Windows:
+
+```bash
+source .venv/Scripts/activate
+```
+
+## 5. Install dependencies
+
+```bash
+pip install -r requirements.txt
+```
+
+## 6. Generate dashboard analytical outputs if required
+
+```bash
+python scripts/generate_dashboard_data.py
+python scripts/validate_hypotheses.py
+```
+
+## 7. Run the Streamlit application
+
+```bash
+streamlit run app/app.py
+```
+
+The application will then open in the browser.
+
+---
+
+# Deployment
+
+The interactive application is developed using Streamlit.
+
+The repository contains the supporting deployment files:
+
+- `Procfile`
+- `setup.sh`
+- `requirements.txt`
+
+The application entry point is:
+
+```text
+app/app.py
+```
+
+Before final deployment, the application is tested locally and the deployed version will be checked to confirm that:
+
+- The application starts successfully.
+- Required datasets load.
+- All five pages are accessible.
+- Charts render correctly.
+- Interactive functionality works.
+- Statistical results display correctly.
+- Documentation is accessible.
+- No local-only file paths are required.
+
+The final live deployment URL will be added here after deployment.
+
+---
+
+# Success Criteria
+
+The project is considered successful when it:
+
+- Clearly communicates overall passenger satisfaction.
+- Allows users to explore passenger and travel characteristics.
+- Identifies airline service areas strongly associated with satisfaction.
+- Validates important findings using appropriate statistical techniques.
+- Communicates both statistical significance and association strength.
+- Presents relevant machine-learning findings.
+- Provides an interactive dashboard suitable for non-technical stakeholders.
+- Provides sufficient analytical evidence for technical users.
+- Addresses ethics, privacy, GDPR and data governance.
+- Communicates project limitations and avoids unsupported causal claims.
+- Uses reproducible and versioned analytical outputs.
+- Provides clear project documentation.
+- Successfully deploys as a functioning web data application.
 
 ---
 
@@ -726,19 +1299,48 @@ These issues were resolved and the affected components were retested before fina
 
 The dataset used in this project is the **Airline Passenger Satisfaction** dataset published on Kaggle by **Teejmahal**.
 
+The original dataset contains passenger characteristics, travel information, service ratings, flight delays and passenger satisfaction classifications.
+
+## Learning and Documentation Resources
+
+Resources supporting the project include:
+
+- Code Institute Data Analytics and AI Bootcamp learning materials and assessment guidance
+- Kaggle
+- Python documentation
+- Pandas documentation
+- NumPy documentation
+- Matplotlib documentation
+- Seaborn documentation
+- SciPy documentation
+- Scikit-learn documentation
+- Plotly documentation
+- Streamlit documentation
+- Git documentation
+- GitHub documentation
+
+# Credits and Acknowledgements
+
+## Dataset
+
+The dataset used in this project is the Airline Passenger Satisfaction dataset published on Kaggle by Teejmahal.
+
 The original dataset contains airline passenger characteristics, travel information, service ratings, flight delays and passenger satisfaction classifications.
 
 ## Learning and Documentation Resources
 
 The following resources supported the development of this project:
 
-* Code Institute Data Analytics and AI Bootcamp learning materials and assessment guidance.
-* Kaggle for providing access to the airline passenger satisfaction dataset.
-* Pandas documentation for data manipulation and analysis.
-* Matplotlib and Seaborn documentation for data visualisation.
-* SciPy documentation for statistical analysis.
-* Scikit-learn documentation for preprocessing, machine-learning models and model evaluation.
-* Streamlit documentation for development of the interactive dashboard.
+- Code Institute Data Analytics and AI Bootcamp learning materials and assessment guidance.
+- Kaggle for providing access to the Airline Passenger Satisfaction dataset.
+- Pandas documentation for data manipulation and analysis.
+- NumPy documentation for numerical operations.
+- Matplotlib and Seaborn documentation for data visualisation.
+- SciPy documentation for statistical analysis.
+- Scikit-learn documentation for preprocessing, machine-learning models and model evaluation.
+- Plotly documentation for interactive data visualisation.
+- Streamlit documentation for development of the interactive dashboard.
+- Git and GitHub documentation for version control and project management.
 
 ## Acknowledgements
 
@@ -748,49 +1350,36 @@ A special thanks to Mr. Vasi for his guidance, support and encouragement through
 
 I would also like to thank my fellow students for their collaboration, discussions, encouragement and willingness to share ideas and learning experiences throughout the bootcamp.
 
-I am grateful to the wider technology and open-source community whose tools, libraries, documentation and learning resources made this project possible. In particular, I would like to acknowledge Python, Pandas, NumPy, Matplotlib, Seaborn, SciPy, Scikit-learn, XGBoost, Streamlit, Plotly, Git, GitHub and Heroku for providing the technologies used to develop, analyse, visualise and deploy this project.
+I am grateful to the wider technology and open-source community whose tools, libraries, documentation and learning resources made this project possible. In particular, I would like to acknowledge Python, Pandas, NumPy, Matplotlib, Seaborn, SciPy, Scikit-learn, Streamlit, Plotly, Git, GitHub and the deployment technologies used to develop, analyse, visualise and deploy this project.
 
 I would also like to acknowledge OpenAI and its AI tools for providing assistance during the development process. AI support was used as a learning and development aid for areas such as troubleshooting, understanding technical concepts, refining approaches, debugging and improving the project workflow. All analysis, interpretation, model evaluation, business recommendations and final project decisions were reviewed and validated as part of my own project work.
 
 Finally, I would like to thank everyone involved in creating and maintaining the learning materials, documentation and resources that helped me complete this project and develop my confidence in applying data analytics and AI techniques to a real-world business problem.
 
 
----
+## AI Assistance
 
-# Reflection
+OpenAI AI tools were used as a learning and development aid during the project.
 
-This project provided an opportunity to apply the complete data analytics workflow to a real-world dataset, from data collection and cleaning through exploratory analysis, statistical testing, machine learning and interactive visualisation.
+AI assistance supported activities including:
 
-One of the main learning experiences was understanding how different analytical techniques support different stages of a project. Exploratory analysis helped identify patterns in passenger satisfaction, while statistical testing was used to determine whether an observed relationship was statistically significant. Machine learning then demonstrated how the available features could be used for prediction.
+- Troubleshooting
+- Understanding technical concepts
+- Debugging
+- Reviewing project structure
+- Refining documentation
+- Improving development workflow
 
-Several technical challenges were encountered during development. Logistic Regression initially failed to converge within the specified number of iterations. Standardising the numerical features within the preprocessing pipeline resolved this issue and reinforced the importance of appropriate preprocessing when applying machine-learning algorithms.
-
-Developing the Streamlit dashboard also required adapting the analysis for an interactive audience. Issues involving file paths, widget state, filtering logic and indentation were identified through testing and corrected. Adding interactive filters demonstrated how analytical results can be transformed from static notebook outputs into a tool that stakeholders can explore themselves.
-
-The project also reinforced the importance of reproducibility. Notebooks were validated using a fresh kernel and Run All before being committed, while the Streamlit application was tested locally and checked for Python syntax errors.
-
-Overall, the project strengthened my understanding of how data cleaning, statistics, visualisation, machine learning, business requirements and interactive reporting work together within an end-to-end analytics project. These skills provide a foundation for adapting to new datasets, analytical methods and tools in future data analytics work.
-
+Analytical outputs, statistical interpretations, model results, business conclusions and final project decisions were reviewed and validated as part of the project development process.
 
 ---
 
-# Dashboard Design and User Experience
+# Current Project Status
 
-The Streamlit dashboard was designed to present the main analytical findings in a clear and accessible format for non-technical stakeholders.
+The analytical application, statistical validation, dashboard development, data versioning, responsible-data documentation and local functional testing have been completed.
 
-The dashboard uses a structured information hierarchy, beginning with high-level KPI metrics before progressing to satisfaction patterns, service insights, machine-learning performance and business recommendations.
+The remaining final stages are:
 
-Interactive sidebar filters allow users to explore the data by:
-
-* Type of Travel
-* Travel Class
-* Customer Type
-* Gender
-
-A **Reset Filters** button allows users to quickly return the dashboard to its default view.
-
-Relevant KPI metrics and analytical charts update dynamically when filters are selected, giving users control over the information displayed.
-
-Machine-learning performance and feature-importance results remain fixed because these values represent the evaluation of the final models on the original test dataset and were not recalculated for individual dashboard filter selections.
-
-Clear headings, descriptive chart titles and consistent dashboard sections were used to make the application easier to navigate and interpret.
+- Deployment and live application verification
+- Final assessment criteria review
+- Submission preparation
