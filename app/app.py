@@ -833,6 +833,9 @@ elif page == "Statistical & Predictive Analysis":
 elif page == "Project Information":
     st.title("Project Information")
 
+    # ---------------------------------------------------------
+    # Project Purpose
+    # ---------------------------------------------------------
     st.subheader("Project Purpose")
 
     st.write(
@@ -844,31 +847,245 @@ elif page == "Project Information":
 
     st.write(
         "The application presents clear business-focused insights for "
-        "non-technical users while also providing more detailed "
-        "analytical information for technical users."
+        "non-technical users while also providing more detailed analytical "
+        "information for technical users. The goal is to support "
+        "data-driven decision-making by identifying service areas, "
+        "passenger characteristics and travel experiences that are "
+        "strongly associated with customer satisfaction."
     )
 
-    st.subheader("Target Audiences")
+    # ---------------------------------------------------------
+    # Business Requirements
+    # ---------------------------------------------------------
+    st.subheader("Business Requirements")
 
     st.markdown(
         """
-        **Non-technical users**
+        **BR1 — Understand passenger satisfaction patterns**
 
-        Airline managers, customer-experience teams, service-quality
-        teams and operational decision-makers.
+        Provide an interactive overview of passenger satisfaction and
+        allow users to investigate differences across passenger
+        characteristics, customer type, travel type and class.
 
-        **Technical users**
+        **BR2 — Identify key drivers of passenger satisfaction**
 
-        Data analysts, data scientists and technically experienced
-        stakeholders who require evidence supporting the dashboard
-        findings.
+        Allow users to investigate which airline service ratings and
+        travel-related factors have the strongest relationships with
+        overall passenger satisfaction.
+
+        **BR3 — Support data-driven service improvement**
+
+        Enable airline stakeholders to identify weaker service areas,
+        important passenger segments and potential opportunities for
+        improving passenger experience.
+
+        **BR4 — Validate insights with analytical evidence**
+
+        Provide technical users with statistical evidence, hypothesis
+        testing results and predictive model findings so that dashboard
+        conclusions can be traced back to the underlying analysis.
         """
     )
 
+    # ---------------------------------------------------------
+    # Target Audiences
+    # ---------------------------------------------------------
+    st.subheader("Target Audiences")
+
+    col1, col2 = st.columns(2)
+
+    with col1:
+        st.markdown(
+            """
+            **Non-technical users**
+
+            - Airline managers
+            - Customer-experience teams
+            - Service-quality teams
+            - Operational decision-makers
+
+            These users require clear KPIs, simple visualisations,
+            interactive filters and practical business interpretation.
+            """
+        )
+
+    with col2:
+        st.markdown(
+            """
+            **Technical users**
+
+            - Data analysts
+            - Data scientists
+            - Technically experienced stakeholders
+
+            These users require methodology, statistical evidence,
+            hypothesis results, model findings, assumptions and
+            limitations.
+            """
+        )
+
+    # ---------------------------------------------------------
+    # Data and Methodology
+    # ---------------------------------------------------------
+    st.subheader("Data and Methodology")
+
+    st.write(
+        "The dashboard uses the cleaned Airline Passenger Satisfaction "
+        "dataset produced during the earlier analytical stage of the "
+        "project. The cleaned dataset contains 103,594 passenger records "
+        "and 23 variables covering passenger characteristics, journey "
+        "information, service ratings, delays and satisfaction."
+    )
+
+    st.markdown(
+        """
+        The analytical workflow includes:
+
+        - data cleaning and validation
+        - exploratory data analysis
+        - passenger-segment comparisons
+        - Chi-square tests of independence
+        - Cramér's V effect-size measurement
+        - Spearman rank correlation for service-rating associations
+        - predictive modelling using Logistic Regression and Random Forest
+        - interactive dashboard presentation using Streamlit
+        """
+    )
+
+    st.info(
+        "Versioned analytical outputs are generated from the cleaned "
+        "dataset and stored separately for use by the dashboard. This "
+        "helps maintain reproducibility and traceability between the "
+        "analysis and the final application."
+    )
+
+    # ---------------------------------------------------------
+    # Ethics and Privacy
+    # ---------------------------------------------------------
+    st.subheader("Ethics, Privacy and Responsible Data Use")
+
+    st.write(
+        "The project uses an anonymised analytical dataset and does not "
+        "require names, contact details, account information or other "
+        "direct personal identifiers for the analysis."
+    )
+
+    st.markdown(
+        """
+        Responsible data-use principles applied to this project include:
+
+        - using only data necessary for the analytical objectives
+        - avoiding attempts to identify individual passengers
+        - presenting findings at aggregated group level
+        - avoiding unsupported causal claims
+        - considering potential bias when comparing passenger groups
+        - separating statistical association from business interpretation
+        - documenting analytical assumptions and limitations
+        """
+    )
+
+    # ---------------------------------------------------------
+    # GDPR and Governance
+    # ---------------------------------------------------------
+    st.subheader("GDPR and Data Governance Considerations")
+
+    st.write(
+        "Although this project uses a public analytical dataset, the "
+        "dashboard is designed using principles that would also be "
+        "important when working with real customer data in a commercial "
+        "environment."
+    )
+
+    st.markdown(
+        """
+        Relevant governance considerations include:
+
+        - **Data minimisation:** only information required for the stated
+          analytical purpose should be processed.
+
+        - **Purpose limitation:** passenger data should only be used for
+          clearly defined and legitimate analytical objectives.
+
+        - **Access control:** operational customer datasets should only be
+          available to authorised users.
+
+        - **Data quality:** analytical outputs should be based on validated,
+          documented and consistently processed data.
+
+        - **Retention:** personal data should not be retained longer than
+          necessary for its legitimate purpose.
+
+        - **Transparency:** stakeholders should understand how data is used,
+          how conclusions are produced and what limitations apply.
+
+        - **Accountability:** analytical decisions, model outputs and
+          transformations should be documented so that results can be
+          reviewed and reproduced.
+        """
+    )
+
+    st.warning(
+        "A real airline deployment involving identifiable passenger data "
+        "would require formal organisational governance, appropriate legal "
+        "basis, security controls, retention policies and any additional "
+        "privacy assessments required by the relevant jurisdiction."
+    )
+
+    # ---------------------------------------------------------
+    # Accessibility and UX
+    # ---------------------------------------------------------
+    st.subheader("Dashboard Accessibility and User Experience")
+
+    st.write(
+        "The dashboard is structured so that business users can access "
+        "high-level insights without needing statistical expertise, while "
+        "technical users can review the evidence behind those conclusions."
+    )
+
+    st.markdown(
+        """
+        Accessibility and usability considerations include:
+
+        - clear page navigation
+        - descriptive chart titles and axis labels
+        - plain-language interpretation of analytical findings
+        - interactive filters for focused exploration
+        - percentage-based comparisons where group sizes differ
+        - technical detail separated from business-facing summaries
+        - warnings where statistical relationships could otherwise be
+          misinterpreted as causal
+        """
+    )
+
+    # ---------------------------------------------------------
+    # Limitations
+    # ---------------------------------------------------------
+    st.subheader("Project Limitations")
+
+    st.markdown(
+        """
+        - The dataset represents a specific sample and may not represent
+          every airline, route, region or passenger population.
+        - Associations found in the data do not establish causation.
+        - Customer satisfaction may be influenced by factors that are not
+          included in the dataset.
+        - Statistical significance can become very strong in large datasets
+          even when the practical relationship is weak.
+        - Predictive model performance applies to the available dataset and
+          may change when used with new or different data.
+        - Service ratings are subjective and reflect individual passenger
+          perceptions.
+        """
+    )
+
+    # ---------------------------------------------------------
+    # Responsible Interpretation
+    # ---------------------------------------------------------
     st.subheader("Responsible Interpretation")
 
     st.warning(
-        "The relationships presented in this dashboard are associations "
-        "within the available dataset. They should not be interpreted "
-        "as proof that one factor directly causes passenger satisfaction."
+        "Dashboard findings should be used as evidence to support further "
+        "investigation and business decision-making, not as proof that a "
+        "particular passenger characteristic or service feature directly "
+        "causes satisfaction or dissatisfaction."
     )
