@@ -1,0 +1,15 @@
+Service,Spearman Correlation,P-value
+Online boarding,0.551,0.0
+Inflight entertainment,0.4,0.0
+Seat comfort,0.362,0.0
+On-board service,0.328,0.0
+Leg room service,0.318,0.0
+Cleanliness,0.303,0.0
+Inflight wifi service,0.287,0.0
+Baggage handling,0.269,0.0
+Inflight service,0.265,0.0
+Checkin service,0.232,0.0
+Food and drink,0.207,0.0
+Ease of Online booking,0.177,0.0
+Gate location,-0.0,0.9011855793105675
+Departure/Arrival time convenient,-0.05,1.1521414124087752e-57

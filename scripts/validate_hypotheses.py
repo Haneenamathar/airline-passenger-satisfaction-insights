@@ -2,7 +2,7 @@ from pathlib import Path
 
 import numpy as np
 import pandas as pd
-from scipy.stats import chi2_contingency
+from scipy.stats import chi2_contingency, spearmanr
 
 
 DATA_PATH = Path("data/clean_data/airline_clean.csv")
@@ -10,6 +10,26 @@ OUTPUT_PATH = Path(
     "data/dashboard_data/hypothesis_results_v1.csv"
 )
 
+H3_OUTPUT_PATH = Path(
+    "data/dashboard_data/service_hypothesis_results_v1.csv"
+)
+
+SERVICE_COLUMNS = [
+    "Inflight wifi service",
+    "Departure/Arrival time convenient",
+    "Ease of Online booking",
+    "Gate location",
+    "Food and drink",
+    "Online boarding",
+    "Seat comfort",
+    "Inflight entertainment",
+    "On-board service",
+    "Leg room service",
+    "Baggage handling",
+    "Checkin service",
+    "Inflight service",
+    "Cleanliness",
+]
 
 def load_data():
     """Load the cleaned airline passenger satisfaction dataset."""
@@ -93,6 +113,37 @@ def validate_class_hypothesis(df):
         "Decision": decision,
     }
 
+def validate_service_rating_hypothesis(df):
+    """Measure associations between service ratings and satisfaction."""
+    satisfaction_binary = df["satisfaction"].map({
+        "neutral or dissatisfied": 0,
+        "satisfied": 1,
+    })
+
+    results = []
+
+    for service in SERVICE_COLUMNS:
+        correlation, p_value = spearmanr(
+            df[service],
+            satisfaction_binary
+        )
+
+        results.append({
+            "Service": service,
+            "Spearman Correlation": round(correlation, 3),
+            "P-value": p_value,
+        })
+
+    results_df = pd.DataFrame(results).sort_values(
+        "Spearman Correlation",
+        ascending=False
+    )
+
+    print("\nH3: Service Ratings vs Satisfaction")
+    print(results_df)
+
+    return results_df
+
 
 def main():
     """Run hypothesis validation tests and save results."""
@@ -100,6 +151,7 @@ def main():
 
     h1_result = validate_travel_type_hypothesis(df)
     h2_result = validate_class_hypothesis(df)
+    h3_results = validate_service_rating_hypothesis(df)
 
     results = pd.DataFrame([
         h1_result,
@@ -108,8 +160,10 @@ def main():
 
     OUTPUT_PATH.parent.mkdir(parents=True, exist_ok=True)
     results.to_csv(OUTPUT_PATH, index=False)
+    h3_results.to_csv(H3_OUTPUT_PATH, index=False)
 
     print(f"\nHypothesis results saved to: {OUTPUT_PATH}")
+    print(f"H3 service results saved to: {H3_OUTPUT_PATH}")
 
 
 if __name__ == "__main__":
