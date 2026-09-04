@@ -1281,31 +1281,6 @@ The project is considered successful when it:
 
 ---
 
-# Credits and Acknowledgements
-
-## Dataset
-
-The dataset used in this project is the **Airline Passenger Satisfaction** dataset published on Kaggle by **Teejmahal**.
-
-The original dataset contains passenger characteristics, travel information, service ratings, flight delays and passenger satisfaction classifications.
-
-## Learning and Documentation Resources
-
-Resources supporting the project include:
-
-- Code Institute Data Analytics and AI Bootcamp learning materials and assessment guidance
-- Kaggle
-- Python documentation
-- Pandas documentation
-- NumPy documentation
-- Matplotlib documentation
-- Seaborn documentation
-- SciPy documentation
-- Scikit-learn documentation
-- Plotly documentation
-- Streamlit documentation
-- Git documentation
-- GitHub documentation
 
 # Credits and Acknowledgements
 
