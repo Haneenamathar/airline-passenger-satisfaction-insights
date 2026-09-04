@@ -1242,35 +1242,23 @@ The application will then open in the browser.
 
 ---
 
-# Deployment
+## Deployment
 
-The interactive application is developed using Streamlit.
+The Streamlit data application is deployed on Heroku.
 
-The repository contains the supporting deployment files:
+### Live Application
 
-- `Procfile`
-- `setup.sh`
-- `requirements.txt`
+[Airline Passenger Satisfaction Insights](https://airline-satisfaction-insights-241f468fb670.herokuapp.com/)
 
-The application entry point is:
+The deployed application includes:
 
-```text
-app/app.py
-```
+- Executive Overview
+- Passenger Insights
+- Service Experience
+- Statistical & Predictive Analysis
+- Project Information
 
-Before final deployment, the application is tested locally and the deployed version will be checked to confirm that:
-
-- The application starts successfully.
-- Required datasets load.
-- All five pages are accessible.
-- Charts render correctly.
-- Interactive functionality works.
-- Statistical results display correctly.
-- Documentation is accessible.
-- No local-only file paths are required.
-
-The final live deployment URL will be added here after deployment.
-
+The live application was verified after deployment to confirm that all dashboard pages load correctly and that the interactive features function as expected.
 ---
 
 # Success Criteria
@@ -1374,12 +1362,23 @@ Analytical outputs, statistical interpretations, model results, business conclus
 
 ---
 
-# Current Project Status
+## Current Project Status
 
-The analytical application, statistical validation, dashboard development, data versioning, responsible-data documentation and local functional testing have been completed.
+The Unit 3 Capstone project is complete and deployed.
 
-The remaining final stages are:
+Completed stages include:
 
-- Deployment and live application verification
-- Final assessment criteria review
-- Submission preparation
+- Project purpose and business requirements
+- Target audience definition
+- Data management and versioned analytical outputs
+- Hypothesis development and validation
+- Interactive Streamlit dashboard development
+- Passenger and service insight visualisations
+- Statistical and predictive analysis
+- Ethics, privacy, GDPR and governance considerations
+- Accessibility and user-experience design
+- Testing and validation
+- Project documentation
+- Heroku deployment and live application verification
+
+The remaining step is the final Capstone assessment criteria review before submission.
