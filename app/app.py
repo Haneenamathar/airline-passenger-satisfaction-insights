@@ -552,29 +552,281 @@ elif page == "Service Experience":
     )
 
 
-    
 elif page == "Statistical & Predictive Analysis":
     st.title("Statistical & Predictive Analysis")
 
     st.write(
-        "This section presents the statistical evidence supporting "
-        "the dashboard findings."
+        "This page provides the technical evidence supporting the "
+        "business insights presented elsewhere in the dashboard."
     )
 
-    st.subheader("Hypothesis Tests")
+    # ---------------------------------------------------------
+    # H1 - Type of Travel
+    # ---------------------------------------------------------
+    st.subheader("H1 — Type of Travel and Passenger Satisfaction")
+
+    st.markdown(
+        """
+        **Null hypothesis (H0):** Type of Travel and passenger
+        satisfaction are independent.
+
+        **Alternative hypothesis (H1):** Type of Travel and passenger
+        satisfaction are associated.
+        """
+    )
+
+    h1_row = hypothesis_results[
+        hypothesis_results["Hypothesis"] == "H1"
+    ].iloc[0]
+
+    col1, col2, col3 = st.columns(3)
+
+    col1.metric(
+        "Chi-square",
+        f"{h1_row['Chi-square']:,.2f}",
+    )
+
+
+    h1_cramers_v = h1_row["Cramer's V"]
+
+    col2.metric(
+    "Cramér's V",
+    f"{h1_cramers_v:.3f}",
+)
+
+    col3.metric(
+        "P-value",
+        "p < 0.001",
+    )
+
+    st.success(
+        "H0 is rejected. Type of Travel has a statistically significant "
+        "association with passenger satisfaction. Cramér's V of 0.449 "
+        "indicates a meaningful relationship in this dataset."
+    )
+
+    # ---------------------------------------------------------
+    # H2 - Travel Class
+    # ---------------------------------------------------------
+    st.subheader("H2 — Travel Class and Passenger Satisfaction")
+
+    st.markdown(
+        """
+        **Null hypothesis (H0):** Travel Class and passenger
+        satisfaction are independent.
+
+        **Alternative hypothesis (H1):** Travel Class and passenger
+        satisfaction are associated.
+        """
+    )
+
+    h2_row = hypothesis_results[
+        hypothesis_results["Hypothesis"] == "H2"
+    ].iloc[0]
+
+    col1, col2, col3 = st.columns(3)
+
+    col1.metric(
+        "Chi-square",
+        f"{h2_row['Chi-square']:,.2f}",
+    )
+
+    h2_cramers_v = h2_row["Cramer's V"]
+
+    col2.metric(
+    "Cramér's V",
+    f"{h2_cramers_v:.3f}",
+)
+
+    col3.metric(
+        "P-value",
+        "p < 0.001",
+    )
+
+    st.success(
+        "H0 is rejected. Travel Class has a statistically significant "
+        "association with passenger satisfaction. Cramér's V of 0.505 "
+        "shows a substantial relationship within this dataset."
+    )
+
+    # ---------------------------------------------------------
+    # H3 - Service Ratings
+    # ---------------------------------------------------------
+    st.subheader("H3 — Service Ratings and Passenger Satisfaction")
+
+    st.markdown(
+        """
+        **Hypothesis:** Airline service ratings are associated with
+        passenger satisfaction, with some service areas showing
+        stronger relationships than others.
+
+        Spearman rank correlation is used because the service ratings
+        are ordered scores. Satisfaction is represented as a binary
+        outcome for this analysis.
+        """
+    )
+
+    h3_chart_data = service_hypothesis_results.sort_values(
+        "Spearman Correlation",
+        ascending=True,
+    )
+
+    h3_chart = px.bar(
+        h3_chart_data,
+        x="Spearman Correlation",
+        y="Service",
+        orientation="h",
+        title="Spearman Association Between Service Ratings and Satisfaction",
+        text="Spearman Correlation",
+    )
+
+    h3_chart.update_traces(
+        texttemplate="%{text:.3f}",
+        textposition="outside",
+    )
+
+    h3_chart.update_layout(
+        xaxis_title="Spearman Correlation (ρ)",
+        yaxis_title="Service Area",
+    )
+
+    st.plotly_chart(
+        h3_chart,
+        use_container_width=True,
+    )
+
+    st.success(
+        "Online boarding has the strongest positive association with "
+        "passenger satisfaction (ρ = 0.551), followed by inflight "
+        "entertainment (ρ = 0.400) and seat comfort (ρ = 0.362)."
+    )
+
+    st.info(
+        "Gate location shows essentially no association "
+        "(ρ ≈ 0, p = 0.901). Departure/arrival time convenience has "
+        "a statistically significant but extremely small negative "
+        "association (ρ = -0.050). This illustrates why effect size "
+        "should be considered alongside statistical significance."
+    )
+
+    # ---------------------------------------------------------
+    # Statistical Results Table
+    # ---------------------------------------------------------
+    st.subheader("Hypothesis Test Results")
+
+    hypothesis_display = hypothesis_results.copy()
+
+    hypothesis_display["P-value"] = hypothesis_display[
+        "P-value"
+    ].apply(
+        lambda value: (
+            "p < 0.001"
+            if value < 0.001
+            else f"p = {value:.3f}"
+        )
+    )
 
     st.dataframe(
-        hypothesis_results,
+        hypothesis_display,
         use_container_width=True,
         hide_index=True,
     )
 
-    st.subheader("Service Rating Associations")
+    # ---------------------------------------------------------
+    # Service Correlation Results
+    # ---------------------------------------------------------
+    with st.expander("View complete service correlation results"):
+        service_display = service_hypothesis_results.copy()
 
-    st.dataframe(
-        service_hypothesis_results,
+        service_display["P-value"] = service_display[
+            "P-value"
+        ].apply(
+            lambda value: (
+                "p < 0.001"
+                if value < 0.001
+                else f"p = {value:.3f}"
+            )
+        )
+
+        st.dataframe(
+            service_display,
+            use_container_width=True,
+            hide_index=True,
+        )
+
+    # ---------------------------------------------------------
+    # Predictive Modelling
+    # ---------------------------------------------------------
+    st.subheader("Predictive Model Performance")
+
+    model_results = pd.DataFrame(
+        {
+            "Model": [
+                "Baseline",
+                "Logistic Regression",
+                "Random Forest",
+            ],
+            "Accuracy (%)": [
+                56.70,
+                87.18,
+                96.42,
+            ],
+        }
+    )
+
+    model_chart = px.bar(
+        model_results,
+        x="Model",
+        y="Accuracy (%)",
+        text="Accuracy (%)",
+        title="Predictive Model Accuracy Comparison",
+    )
+
+    model_chart.update_traces(
+        texttemplate="%{text:.2f}%",
+        textposition="outside",
+    )
+
+    model_chart.update_layout(
+        yaxis_title="Accuracy (%)",
+        xaxis_title="Model",
+    )
+
+    st.plotly_chart(
+        model_chart,
         use_container_width=True,
-        hide_index=True,
+    )
+
+    st.success(
+        "The Random Forest model achieved the highest accuracy at "
+        "96.42%, compared with 87.18% for Logistic Regression and "
+        "56.70% for the baseline model."
+    )
+
+    st.warning(
+        "Predictive performance and feature importance should not be "
+        "interpreted as evidence of causation. Model results indicate "
+        "which variables are useful for prediction within this dataset."
+    )
+
+    # ---------------------------------------------------------
+    # Technical Interpretation
+    # ---------------------------------------------------------
+    st.subheader("Technical Interpretation")
+
+    st.markdown(
+        """
+        - **H1:** Type of Travel is associated with passenger satisfaction.
+        - **H2:** Travel Class is associated with passenger satisfaction.
+        - **H3:** Service ratings show different strengths of association
+          with satisfaction, with Online boarding showing the strongest
+          relationship among the analysed service ratings.
+        - Statistical significance is considered together with effect
+          size because a large dataset can produce very small p-values
+          even for weak relationships.
+        - The analyses identify associations and predictive patterns;
+          they do not establish causal relationships.
+        """
     )
 
 
