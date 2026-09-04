@@ -190,23 +190,237 @@ elif page == "Passenger Insights":
         "passenger and journey characteristics."
     )
 
-    st.info(
-        "Passenger-level visualisations will be developed in the "
-        "next dashboard stage."
+    # ---------------------------------------------------------
+    # Satisfaction by Type of Travel
+    # ---------------------------------------------------------
+    st.subheader("Satisfaction by Type of Travel")
+
+    travel_summary = (
+        filtered_df.groupby(
+            ["Type of Travel", "satisfaction"]
+        )
+        .size()
+        .reset_index(name="Passengers")
     )
 
+    travel_totals = (
+        travel_summary.groupby("Type of Travel")["Passengers"]
+        .transform("sum")
+    )
 
-elif page == "Service Experience":
-    st.title("Service Experience")
+    travel_summary["Percentage"] = (
+        travel_summary["Passengers"] / travel_totals * 100
+    )
 
-    st.write(
-        "Explore which service areas have the strongest relationships "
-        "with overall passenger satisfaction."
+    travel_chart = px.bar(
+        travel_summary,
+        x="Type of Travel",
+        y="Percentage",
+        color="satisfaction",
+        barmode="group",
+        text="Percentage",
+        title="Passenger Satisfaction by Type of Travel",
+    )
+
+    travel_chart.update_traces(
+        texttemplate="%{text:.1f}%",
+        textposition="outside",
+    )
+
+    travel_chart.update_layout(
+        xaxis_title="Type of Travel",
+        yaxis_title="Passengers (%)",
+        legend_title="Satisfaction",
+    )
+
+    st.plotly_chart(
+        travel_chart,
+        use_container_width=True,
+    )
+
+    st.caption(
+        "Business and personal travellers show noticeably different "
+        "satisfaction patterns in the dataset."
+    )
+
+    # ---------------------------------------------------------
+    # Satisfaction by Travel Class
+    # ---------------------------------------------------------
+    st.subheader("Satisfaction by Travel Class")
+
+    class_summary = (
+        filtered_df.groupby(
+            ["Class", "satisfaction"]
+        )
+        .size()
+        .reset_index(name="Passengers")
+    )
+
+    class_totals = (
+        class_summary.groupby("Class")["Passengers"]
+        .transform("sum")
+    )
+
+    class_summary["Percentage"] = (
+        class_summary["Passengers"] / class_totals * 100
+    )
+
+    class_chart = px.bar(
+        class_summary,
+        x="Class",
+        y="Percentage",
+        color="satisfaction",
+        barmode="group",
+        text="Percentage",
+        title="Passenger Satisfaction by Travel Class",
+    )
+
+    class_chart.update_traces(
+        texttemplate="%{text:.1f}%",
+        textposition="outside",
+    )
+
+    class_chart.update_layout(
+        xaxis_title="Travel Class",
+        yaxis_title="Passengers (%)",
+        legend_title="Satisfaction",
+    )
+
+    st.plotly_chart(
+        class_chart,
+        use_container_width=True,
+    )
+
+    st.caption(
+        "Satisfaction levels vary substantially across travel classes."
+    )
+
+    # ---------------------------------------------------------
+    # Satisfaction by Customer Type
+    # ---------------------------------------------------------
+    st.subheader("Satisfaction by Customer Type")
+
+    customer_summary = (
+        filtered_df.groupby(
+            ["Customer Type", "satisfaction"]
+        )
+        .size()
+        .reset_index(name="Passengers")
+    )
+
+    customer_totals = (
+        customer_summary.groupby("Customer Type")["Passengers"]
+        .transform("sum")
+    )
+
+    customer_summary["Percentage"] = (
+        customer_summary["Passengers"] / customer_totals * 100
+    )
+
+    customer_chart = px.bar(
+        customer_summary,
+        x="Customer Type",
+        y="Percentage",
+        color="satisfaction",
+        barmode="group",
+        text="Percentage",
+        title="Passenger Satisfaction by Customer Type",
+    )
+
+    customer_chart.update_traces(
+        texttemplate="%{text:.1f}%",
+        textposition="outside",
+    )
+
+    customer_chart.update_layout(
+        xaxis_title="Customer Type",
+        yaxis_title="Passengers (%)",
+        legend_title="Satisfaction",
+    )
+
+    st.plotly_chart(
+        customer_chart,
+        use_container_width=True,
+    )
+
+    # ---------------------------------------------------------
+    # Satisfaction by Gender
+    # ---------------------------------------------------------
+    st.subheader("Satisfaction by Gender")
+
+    gender_summary = (
+        filtered_df.groupby(
+            ["Gender", "satisfaction"]
+        )
+        .size()
+        .reset_index(name="Passengers")
+    )
+
+    gender_totals = (
+        gender_summary.groupby("Gender")["Passengers"]
+        .transform("sum")
+    )
+
+    gender_summary["Percentage"] = (
+        gender_summary["Passengers"] / gender_totals * 100
+    )
+
+    gender_chart = px.bar(
+        gender_summary,
+        x="Gender",
+        y="Percentage",
+        color="satisfaction",
+        barmode="group",
+        text="Percentage",
+        title="Passenger Satisfaction by Gender",
+    )
+
+    gender_chart.update_traces(
+        texttemplate="%{text:.1f}%",
+        textposition="outside",
+    )
+
+    gender_chart.update_layout(
+        xaxis_title="Gender",
+        yaxis_title="Passengers (%)",
+        legend_title="Satisfaction",
+    )
+
+    st.plotly_chart(
+        gender_chart,
+        use_container_width=True,
+    )
+
+    # ---------------------------------------------------------
+    # Age Distribution
+    # ---------------------------------------------------------
+    st.subheader("Passenger Age Distribution")
+
+    age_chart = px.histogram(
+        filtered_df,
+        x="Age",
+        color="satisfaction",
+        nbins=20,
+        barmode="overlay",
+        title="Age Distribution by Satisfaction",
+    )
+
+    age_chart.update_layout(
+        xaxis_title="Age",
+        yaxis_title="Number of Passengers",
+        legend_title="Satisfaction",
+    )
+
+    st.plotly_chart(
+        age_chart,
+        use_container_width=True,
     )
 
     st.info(
-        "Service-rating visualisations will be developed in the "
-        "next dashboard stage."
+        "Use the sidebar filters to compare specific travel classes, "
+        "travel types, customer groups and genders. Percentages in the "
+        "categorical charts are calculated within each group so that "
+        "groups of different sizes can be compared fairly."
     )
 
 
