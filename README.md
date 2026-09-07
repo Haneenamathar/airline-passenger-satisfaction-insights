@@ -1346,7 +1346,7 @@ Analytical outputs, statistical interpretations, model results, business conclus
 
 ## Current Project Status
 
-The Unit 3 Capstone project is complete and deployed.
+The Project-3 Capstone project is complete and deployed.
 
 Completed stages include:
 
