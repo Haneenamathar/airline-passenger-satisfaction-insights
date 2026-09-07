@@ -1290,6 +1290,13 @@ The dataset used in this project is the Airline Passenger Satisfaction dataset p
 
 The original dataset contains airline passenger characteristics, travel information, service ratings, flight delays and passenger satisfaction classifications.
 
+
+I would also like to acknowledge that this Capstone project-3 builds upon my previous Project-2 Airline Passenger Satisfaction analysis. The  project-2 provided the foundation for this Capstone, which expanded the original analysis through additional statistical analysis, machine-learning evaluation, reproducible dashboard data preparation and the development of an interactive Streamlit application.
+
+Previous Project-2: Airline Passenger Satisfaction Analysis
+
+https://github.com/Haneenamathar/airline-passenger-satisfaction
+
 ## Learning and Documentation Resources
 
 The following resources supported the development of this project:
